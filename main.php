@@ -84,11 +84,6 @@
                                                         <span class="country-name">Indonesia</span>
                                                         <span class="country-code">+62</span>
                                                     </div>
-                                                    <div role="menuitem" tabindex="0" class="MenuItem" id="iteM">
-                                                        <span class="country-flag"><img src="../assets/img/Cambodia.png" class="emoji" alt="🇧🇳" data-path="./lib/img-apple-160/1f1f3-1f1ea.png"></span>
-                                                        <span class="country-name">Cambodia</span>
-                                                        <span class="country-code">+855</span>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
